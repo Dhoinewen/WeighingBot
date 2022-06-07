@@ -1,7 +1,6 @@
 import logging
 
-
-from model import User, session
+from data import create_user, create_weighing
 from aiogram import Bot, Dispatcher, executor, types
 from helpers import from_oject_to_str
 
@@ -15,21 +14,28 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
 
-@dp.message_handler(commands=['start', 'help'])
+@dp.message_handler(commands=['start'])
 async def send_welcome(message: types.Message):
-
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    buttons = ["С пюрешкой", "Без пюрешки"]
+    buttons = ["Додати зважування", "2"]
     keyboard.add(*buttons)
-    await message.answer("Hi!\nI'm EchoBot!\nPowered by aiogram." , reply_markup=keyboard)
+    registered = create_user(message.from_user.id, message.from_user.username)
+    if registered is False:
+        await message.answer("Already registered", reply_markup=keyboard)
+    else:
+        await message.answer("Successfully Registered", reply_markup=keyboard)
 
 
-@dp.message_handler(lambda message: message.text == "Без пюрешки")
+@dp.message_handler(lambda message: message.text == "Додати зважування")
 async def without_puree(message: types.Message):
-    print(types.base.TelegramObject.)
-    user = session.query(User).filter(User.id == 1).first()
-    text = from_oject_to_str(user)
-    await message.answer(text)
+    try:
+        text = message.reply_to_message.text # if replied
+    except AttributeError:
+        text = 'not replied'
+    print(text)
+    await message.answer('Вкажіть вагу')
+
+
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)

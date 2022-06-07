@@ -21,6 +21,8 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     weights = relationship('Weight', lazy=True)
+    telegram_id = Column(Integer, nullable=False)
+    telegram_username = Column(String, nullable=True)
 
     def __repr__(self):
         return f'{self.id}'
@@ -67,4 +69,4 @@ class Weight(Base):
 #     print(weight, 'kg', weight.created_at.strftime("%Y-%m-%d %H:%M"))
 #     text += str(weight) + weight.created_at.strftime("%Y-%m-%d %H:%M")
 #     print(text)
-
+#
