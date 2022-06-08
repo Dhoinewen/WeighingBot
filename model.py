@@ -37,36 +37,3 @@ class Weight(Base):
 
     def __repr__(self):
         return f'{self.weight}'
-
-
-# user = User()
-# session.add(user)
-# session.commit()
-#
-# weight = Weight(weight=77.2)
-# session.add(weight)
-# session.commit()
-
-# users = session.query(User).all()
-# for user in users:
-#     print(user)
-#
-#
-# weights = session.query(Weight).all()
-# for weight in weights:
-#     print(weight.created_at)
-#
-# text = ''
-# user = session.query(User).filter(User.id == 1).first()
-# print(user)
-# weight = session.query(Weight).filter(Weight.id == 1).first()
-# print(weight)
-# user.weights.append(weight)
-# session.commit()
-# user = session.query(User).filter(User.id == 1).first()
-# print(user.weights)
-# for weight in user.weights:
-#     print(weight, 'kg', weight.created_at.strftime("%Y-%m-%d %H:%M"))
-#     text += str(weight) + weight.created_at.strftime("%Y-%m-%d %H:%M")
-#     print(text)
-#
