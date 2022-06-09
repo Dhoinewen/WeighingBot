@@ -5,11 +5,11 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
-from helpers import from_oject_to_str, check_weight
+from helpers import from_oject_to_str, check_weight, read_token
 from data import create_user, create_weighing, get_all_weighing
 
 
-API_TOKEN = '5343065010:AAGqqsXGH0G2NugZxKAwJydwEy5b9o2F6qw'
+API_TOKEN = read_token('bot_token.txt')
 
 
 logging.basicConfig(level=logging.INFO)

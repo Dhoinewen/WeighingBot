@@ -1,8 +1,13 @@
+def read_token(file_name):
+    with open(file_name, 'r') as file:
+        token = file.readline()
+    return token
+
+
 def from_oject_to_str(data):
     text = ''
     for data in data.weights:
         text += str(data) + ' kg ' + data.created_at.strftime("%Y-%m-%d %H:%M") + '\n'
-    print(text)
     return text
 
 
