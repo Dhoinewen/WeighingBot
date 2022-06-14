@@ -1,4 +1,5 @@
 from model import User, session, Weight
+from datetime import datetime, timedelta
 
 
 def create_user(telegram_id, telegram_username):
@@ -25,5 +26,10 @@ def create_weighing(telegram_id, weight):
 
 def get_all_weighing(telegram_id):
     return session.query(User).filter(User.telegram_id == telegram_id).first()
+
+
+def get_seven_days_get_all_weighing(telegram_id):
+    seven_days = datetime.utcnow() - timedelta(days=7)
+    weighing_last_seven_days = session.query(Weight).filter(Weight.created_at > seven_days.date()).all()
 
 

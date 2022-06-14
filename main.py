@@ -6,7 +6,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from helpers import from_object_to_str, check_weight, read_token, weighing_was_today
-from data import create_user, create_weighing, get_all_weighing
+from data import create_user, create_weighing, get_all_weighing, get_seven_days_get_all_weighing
 
 
 API_TOKEN = read_token('bot_token.txt')
@@ -63,8 +63,24 @@ async def save_weighing(message: types.Message, state: FSMContext):
 
 @dp.message_handler(lambda message: message.text == "Show my stats")
 async def show_my_stats(message: types.Message):
-    data = get_all_weighing(message.from_user.id)
-    await message.answer(from_object_to_str(data))
+    keyboard = types.InlineKeyboardMarkup()
+    keyboard.add(types.InlineKeyboardButton(text="Last 7 days", callback_data="seven_days"))
+    keyboard.add(types.InlineKeyboardButton(text="Last 14 days", callback_data="two_week"))
+    keyboard.add(types.InlineKeyboardButton(text="All", callback_data="all_data"))
+    await message.answer('Choose filter',  reply_markup=keyboard)
+
+
+@dp.callback_query_handler(text="seven_days")
+async def seven_days_stats(call: types.CallbackQuery):
+    await call.message.answer(5)
+    await call.answer()
+
+
+@dp.callback_query_handler(text="all_data")
+async def all_stats(call: types.CallbackQuery):
+    data = get_all_weighing(call.from_user.id)
+    await call.message.answer(from_object_to_str(data))
+    await call.answer()
 
 
 if __name__ == '__main__':
