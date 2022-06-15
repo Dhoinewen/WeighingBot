@@ -24,12 +24,14 @@ def create_weighing(telegram_id, weight):
     session.commit()
 
 
-def get_all_weighing(telegram_id):
-    return session.query(User).filter(User.telegram_id == telegram_id).first()
+def get_weighing(telegram_id, for_time):
+    if for_time is None:
+        weighing = session.query(User).filter(User.telegram_id == telegram_id).first()
+    else:
+        delta_in_days = datetime.utcnow() - timedelta(days=for_time)
+        weighing = session.query(Weight).join(User).filter(User.telegram_id == telegram_id) \
+            .filter(Weight.created_at > delta_in_days).all()
+    return weighing
 
-
-def get_seven_days_get_all_weighing(telegram_id):
-    seven_days = datetime.utcnow() - timedelta(days=7)
-    weighing_last_seven_days = session.query(Weight).filter(Weight.created_at > seven_days.date()).all()
 
 

@@ -8,10 +8,17 @@ def read_token(file_name):
     return token
 
 
-def from_object_to_str(data):
+def from_object_user_to_str(data):
     text = ''
     for data in data.weights:
         text += str(data) + ' kg ' + data.created_at.strftime("<u>%Y-%m-%d</u>") + '\n'
+    return text
+
+
+def from_object_weight_to_str(data):
+    text = ''
+    for weight in data:
+        text += str(weight) + ' kg ' + weight.created_at.strftime("<u>%Y-%m-%d</u>") + '\n'
     return text
 
 
